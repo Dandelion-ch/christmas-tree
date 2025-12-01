@@ -2,21 +2,26 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>圣诞树视频展示</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AE-圣诞树</title>
+    
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
-        body {
-            font-family: 'Arial', sans-serif;
-            background: #0a2e38;
-            color: white;
+        html, body {
+            width: 100%;
+            height: 100%;
             overflow: hidden;
-            height: 100vh;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
         
         #main {
@@ -34,293 +39,280 @@
             object-fit: cover;
         }
         
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .title {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
-            text-align: center;
-            animation: glow 2s infinite alternate;
-        }
-        
-        .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 40px;
-            text-align: center;
-            max-width: 80%;
-        }
-        
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .btn {
-            padding: 12px 25px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid white;
-            color: white;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s;
-            backdrop-filter: blur(5px);
-        }
-        
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-        }
-        
-        .links {
-            position: fixed;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 1000;
-        }
-        
-        .link-btn {
-            width: 50px;
-            height: 50px;
-            background: rgba(105, 105, 105, 0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ddd;
-            text-decoration: none;
-            font-size: 12px;
-            transition: all 0.3s;
-            text-align: center;
-            line-height: 1.2;
-            padding: 5px;
-            backdrop-filter: blur(5px);
-        }
-        
-        .link-btn:hover {
-            background: rgba(105, 105, 105, 1);
-            transform: scale(1.1);
-        }
-        
-        .snowflakes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 3;
-        }
-        
-        .snowflake {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: fall linear infinite;
-        }
-        
-        .message {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            z-index: 100;
+        .hidden {
             display: none;
         }
         
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
-            }
-            to {
-                text-shadow: 0 0 20px rgba(0, 255, 0, 0.9), 0 0 30px rgba(0, 255, 0, 0.5);
+        /* 手机优化样式 */
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .touch-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            text-align: center;
+            animation: pulse 2s infinite;
+            pointer-events: auto;
+        }
+        
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 20;
+        }
+        
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(105, 105, 105, 0.8);
+            border: none;
+            color: white;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.3s;
+        }
+        
+        .control-btn:active {
+            transform: scale(0.9);
+            background: rgba(105, 105, 105, 1);
+        }
+        
+        .orientation-warning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .orientation-warning .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        
+        /* 横屏优化 */
+        @media (orientation: landscape) {
+            .touch-hint {
+                display: none;
             }
         }
         
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
+        /* 竖屏优化 */
+        @media (orientation: portrait) {
+            #video1 {
+                object-fit: contain;
+                background: #000;
             }
         }
         
-        @media (max-width: 768px) {
-            .title {
-                font-size: 2.5rem;
-            }
-            
-            .subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .links {
-                right: 5px;
-            }
-            
-            .link-btn {
+        /* 小屏幕优化 */
+        @media (max-width: 480px) {
+            .control-btn {
                 width: 45px;
                 height: 45px;
-                font-size: 11px;
+                font-size: 18px;
+            }
+            
+            .touch-hint {
+                font-size: 12px;
+                padding: 8px 16px;
+                bottom: 20px;
             }
         }
     </style>
 </head>
-<body id="app">
+<body>
+    <!-- 主视频容器 -->
     <div id="main">
         <!-- 使用在线视频作为示例，实际使用时替换为您的视频路径 -->
-        <video id="video1" muted autoplay loop>
+        <video id="video1" muted autoplay loop playsinline webkit-playsinline>
             <source src="https://assets.mixkit.co/videos/preview/mixkit-christmas-tree-with-lights-43985-large.mp4" type="video/mp4">
-            您的浏览器不支持视频标签。
+            您的浏览器不支持视频播放。
         </video>
     </div>
     
-    <div class="overlay">
-        <h1 class="title">圣诞快乐</h1>
-        <p class="subtitle">愿这个圣诞节充满欢乐与祝福</p>
+    <!-- 手机优化覆盖层 -->
+    <div class="mobile-overlay">
+        <div class="touch-hint" id="touchHint">
+            点击屏幕开始播放音乐
+        </div>
+        
         <div class="controls">
-            <button class="btn" id="playBtn">播放/暂停</button>
-            <button class="btn" id="muteBtn">取消静音</button>
-            <button class="btn" id="speedBtn">调整速度</button>
+            <button class="control-btn" id="playBtn">▶❚❚</button>
+            <button class="control-btn" id="muteBtn">🔇</button>
+            <button class="control-btn" id="fullscreenBtn">⛶</button>
         </div>
     </div>
     
-    <div class="links">
-        <a href="https://mp.weixin.qq.com/s/oxLqXBcLCT8ij67DjkW2kw" class="link-btn">制作教程</a>
-        <a href="https://pan.xunlei.com/s/VNlDcB3ABz0oNSOEv5mpSE_tA1?pwd=97rw#" class="link-btn">资源合集</a>
-        <a href="https://drive.uc.cn/s/4819fdecb8a24" class="link-btn">源码下载</a>
-        <a href="https://shop1619956412.v.weidian.com/?userid=1619956412&spider_token=2720" class="link-btn">节日红包</a>
+    <!-- 横屏提示 -->
+    <div class="orientation-warning" id="orientationWarning">
+        <div class="icon">📱</div>
+        <h2>请将手机横屏观看</h2>
+        <p>为了获得最佳观看体验，请将您的设备旋转至横屏模式</p>
     </div>
     
-    <div class="snowflakes" id="snowContainer"></div>
-    <div class="message" id="message"></div>
-    
+    <!-- 背景音乐 -->
+    <audio id="music1" loop preload="auto">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-christmas-magic-175.mp3" type="audio/mp3">
+    </audio>
+
     <script>
-        // 获取DOM元素
-        const video = document.getElementById('video1');
-        const playBtn = document.getElementById('playBtn');
-        const muteBtn = document.getElementById('muteBtn');
-        const speedBtn = document.getElementById('speedBtn');
-        const message = document.getElementById('message');
-        const snowContainer = document.getElementById('snowContainer');
-        
-        // 初始化视频设置
-        video.playbackRate = 0.8;
-        
-        // 创建雪花
-        function createSnowflakes() {
-            const snowflakeCount = 100;
+        document.addEventListener('DOMContentLoaded', function() {
+            var video = document.getElementById('video1');
+            var music = document.getElementById('music1');
+            var playBtn = document.getElementById('playBtn');
+            var muteBtn = document.getElementById('muteBtn');
+            var fullscreenBtn = document.getElementById('fullscreenBtn');
+            var touchHint = document.getElementById('touchHint');
+            var orientationWarning = document.getElementById('orientationWarning');
+            var body = document.body;
             
-            for (let i = 0; i < snowflakeCount; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.classList.add('snowflake');
-                
-                // 随机大小
-                const size = Math.random() * 5 + 2;
-                snowflake.style.width = `${size}px`;
-                snowflake.style.height = `${size}px`;
-                
-                // 随机位置
-                snowflake.style.left = `${Math.random() * 100}%`;
-                snowflake.style.top = `${Math.random() * -20}%`;
-                
-                // 随机动画时长
-                const duration = Math.random() * 5 + 5;
-                snowflake.style.animationDuration = `${duration}s`;
-                
-                // 随机动画延迟
-                snowflake.style.animationDelay = `${Math.random() * 5}s`;
-                
-                snowContainer.appendChild(snowflake);
+            // 设置视频播放速度
+            video.playbackRate = 0.8;
+            
+            // 播放/暂停控制
+            playBtn.addEventListener('click', function() {
+                if (video.paused) {
+                    video.play();
+                    playBtn.textContent = '❚❚';
+                } else {
+                    video.pause();
+                    playBtn.textContent = '▶';
+                }
+            });
+            
+            // 静音控制
+            muteBtn.addEventListener('click', function() {
+                if (video.muted) {
+                    video.muted = false;
+                    music.muted = false;
+                    muteBtn.textContent = '🔊';
+                } else {
+                    video.muted = true;
+                    music.muted = true;
+                    muteBtn.textContent = '🔇';
+                }
+            });
+            
+            // 全屏控制
+            fullscreenBtn.addEventListener('click', function() {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    document.documentElement.requestFullscreen().catch(function(e) {
+                        console.log('全屏请求被拒绝:', e);
+                    });
+                }
+            });
+            
+            // 用户交互时自动播放音乐
+            function playMusicOnInteraction() {
+                if (music.paused) {
+                    music.play().then(function() {
+                        touchHint.style.display = 'none';
+                    }).catch(function(e) {
+                        console.log("音乐播放被阻止:", e);
+                    });
+                }
             }
-        }
-        
-        // 显示消息
-        function showMessage(text, duration = 2000) {
-            message.textContent = text;
-            message.style.display = 'block';
-            setTimeout(() => {
-                message.style.display = 'none';
-            }, duration);
-        }
-        
-        // 播放/暂停控制
-        playBtn.addEventListener('click', function() {
-            if (video.paused) {
-                video.play();
-                showMessage('视频已播放');
-            } else {
-                video.pause();
-                showMessage('视频已暂停');
+            
+            // 添加触摸事件监听器
+            body.addEventListener('touchstart', function() {
+                playMusicOnInteraction();
+                // 移除提示
+                setTimeout(function() {
+                    touchHint.style.display = 'none';
+                }, 2000);
+            });
+            
+            // 点击事件监听器
+            body.addEventListener('click', playMusicOnInteraction);
+            
+            // 横屏检测
+            function checkOrientation() {
+                if (window.innerHeight > window.innerWidth) {
+                    // 竖屏
+                    orientationWarning.style.display = 'flex';
+                } else {
+                    // 横屏
+                    orientationWarning.style.display = 'none';
+                }
             }
-        });
-        
-        // 静音控制
-        muteBtn.addEventListener('click', function() {
-            if (video.muted) {
-                video.muted = false;
-                muteBtn.textContent = '静音';
-                showMessage('声音已开启');
-            } else {
-                video.muted = true;
-                muteBtn.textContent = '取消静音';
-                showMessage('声音已关闭');
-            }
-        });
-        
-        // 速度控制
-        let speedIndex = 0;
-        const speeds = [0.5, 0.8, 1.0, 1.5, 2.0];
-        
-        speedBtn.addEventListener('click', function() {
-            speedIndex = (speedIndex + 1) % speeds.length;
-            video.playbackRate = speeds[speedIndex];
-            showMessage(`播放速度: ${speeds[speedIndex]}x`);
-        });
-        
-        // 初始化雪花
-        createSnowflakes();
-        
-        // 页面加载完成后显示欢迎消息
-        window.addEventListener('load', function() {
-            showMessage('欢迎来到圣诞树视频展示页面！', 3000);
-        });
-        
-        // 添加键盘快捷键
-        document.addEventListener('keydown', function(e) {
-            switch(e.key) {
-                case ' ':
-                    e.preventDefault();
+            
+            // 初始检查和监听方向变化
+            checkOrientation();
+            window.addEventListener('resize', checkOrientation);
+            window.addEventListener('orientationchange', checkOrientation);
+            
+            // 防止视频加载失败
+            video.addEventListener('error', function() {
+                console.log('视频加载失败，使用备用方案');
+                // 可以在这里添加备用视频源或静态图片
+            });
+            
+            // 视频触摸控制
+            video.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                // 简单的触摸控制：点击视频左侧暂停/播放，右侧静音/取消静音
+                var touchX = e.touches[0].clientX;
+                var screenWidth = window.innerWidth;
+                
+                if (touchX < screenWidth / 2) {
+                    // 左侧：播放/暂停
                     playBtn.click();
-                    break;
-                case 'm':
+                } else {
+                    // 右侧：静音/取消静音
                     muteBtn.click();
-                    break;
-                case 's':
-                    speedBtn.click();
-                    break;
-            }
+                }
+            });
+            
+            // 禁用双击缩放
+            var lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                var now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
         });
     </script>
 </body>
