@@ -1,1017 +1,252 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ 终极动态炫光圣诞树 ✨</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+    <title>✨ 专属程序员的浪漫圣诞树 ✨</title>
     <style>
-        :root {
-            --primary-green: #00ff88;
-            --sparkle-gold: #ffdd00;
-            --heart-red: #ff2a6d;
-            --snow-blue: #d1f7ff;
-            --bg-deep: #0a0a2a;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            background: linear-gradient(135deg, var(--bg-deep) 0%, #1a1a2e 50%, #16213e 100%);
-            color: white;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* 背景星光 */
-        #stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .star {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            animation: twinkle var(--duration) infinite ease-in-out;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 30px 20px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* 标题区域 */
-        .header {
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .title-glow {
-            font-family: 'ZCOOL QingKe HuangYou', cursive;
-            font-size: 3.2rem;
-            background: linear-gradient(45deg, var(--primary-green), var(--sparkle-gold), #00ccff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 15px;
-            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
-            animation: titleGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes titleGlow {
-            from { filter: hue-rotate(0deg); }
-            to { filter: hue-rotate(360deg); }
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: #a0e7ff;
-            opacity: 0.9;
-            margin-bottom: 25px;
-        }
-
-        /* 数据面板 */
-        .stats-panel {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .stat-item {
-            text-align: center;
-            min-width: 120px;
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--sparkle-gold);
-            text-shadow: 0 0 15px currentColor;
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* 圣诞树容器 - 核心区域 */
-        .tree-section {
-            position: relative;
-            margin: 50px auto;
-            padding: 40px 30px;
-            background: rgba(10, 20, 40, 0.6);
-            border-radius: 25px;
-            border: 2px solid transparent;
-            background-clip: padding-box;
-            box-shadow: 
-                inset 0 0 30px rgba(0, 100, 255, 0.2),
-                0 15px 40px rgba(0, 0, 0, 0.4);
-            overflow: hidden;
-            min-height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .tree-section::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: linear-gradient(45deg, 
-                var(--primary-green), 
-                var(--sparkle-gold), 
-                #ff00ff, 
-                #00ccff);
-            border-radius: inherit;
-            z-index: -1;
-            animation: borderRotate 4s linear infinite;
-        }
-
-        @keyframes borderRotate {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-
-        /* 树体样式 */
-        #treeCanvas {
-            max-width: 100%;
-            height: auto;
-            filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.3));
-        }
-
-        /* 祝福语区域 */
-        .wish-box {
-            background: linear-gradient(135deg, 
-                rgba(255, 42, 109, 0.15) 0%, 
-                rgba(0, 204, 255, 0.15) 100%);
-            border-radius: 20px;
-            padding: 30px;
-            margin: 40px auto;
-            max-width: 700px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .wish-box::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 4px;
-            background: linear-gradient(90deg, 
-                var(--primary-green), 
-                var(--sparkle-gold), 
-                var(--heart-red));
-        }
-
-        .wish-text {
-            font-family: 'Ma Shan Zheng', cursive;
-            font-size: 2.2rem;
+            background-color: #0a0a2a;
             color: #fff;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            margin-bottom: 15px;
-            min-height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 2;
+            font-family: 'Courier New', monospace, 'Microsoft YaHei';
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            overflow-x: hidden;
         }
-
-        .wish-author {
-            font-size: 1.1rem;
-            color: var(--sparkle-gold);
-            font-style: italic;
-            opacity: 0.9;
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 25px 15px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+            box-shadow: 0 0 30px rgba(0, 200, 255, 0.2);
+            border: 1px solid rgba(255,255,255,0.1);
         }
-
-        /* 控制按钮组 */
-        .controls-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            max-width: 800px;
-            margin: 40px auto;
-        }
-
-        .ctrl-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: none;
-            border-radius: 15px;
-            padding: 20px 15px;
-            color: white;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .ctrl-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .ctrl-btn:active {
-            transform: translateY(-2px);
-        }
-
-        .ctrl-btn i {
-            font-size: 2rem;
-            transition: transform 0.3s;
-        }
-
-        .ctrl-btn:hover i {
-            transform: scale(1.2);
-        }
-
-        .btn-label {
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
-        /* 特效按钮颜色 */
-        .btn-light { color: var(--primary-green); }
-        .btn-style { color: #ff9966; }
-        .btn-wish { color: #9966ff; }
-        .btn-snow { color: var(--snow-blue); }
-        .btn-heart { color: var(--heart-red); }
-        .btn-music { color: #ffcc00; }
-        .btn-share { color: #00ccff; }
-
-        /* 页脚 */
-        .footer {
-            margin-top: 60px;
-            color: #88aaff;
-            font-size: 0.95rem;
-            opacity: 0.8;
-            padding: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* 粒子特效层 */
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        /* 雪花 */
-        .snowflake {
-            position: absolute;
-            color: var(--snow-blue);
-            font-size: 20px;
-            user-select: none;
-            pointer-events: none;
-            animation: snowFall linear infinite;
-            opacity: 0.7;
-        }
-
-        @keyframes snowFall {
-            0% {
-                transform: translateY(-10%) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(110vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* 爱心 */
-        .heart {
-            position: absolute;
-            color: var(--heart-red);
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 25px;
             font-size: 24px;
-            pointer-events: none;
-            z-index: 20;
-            animation: heartFloat 2s ease-out forwards;
-            filter: drop-shadow(0 0 5px currentColor);
+            text-shadow: 0 0 10px #4CAF50;
         }
-
-        @keyframes heartFloat {
-            0% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-150px) scale(1.5);
-            }
+        .tree {
+            font-size: 22px;
+            line-height: 1.3;
+            letter-spacing: 2px;
+            color: #32CD32;
+            margin: 25px auto;
+            text-shadow: 0 0 8px #32CD32;
         }
-
-        /* 响应式调整 */
-        @media (max-width: 768px) {
-            .title-glow { font-size: 2.5rem; }
-            .stats-panel { padding: 20px 15px; gap: 20px; }
-            .stat-value { font-size: 2rem; }
-            .wish-text { font-size: 1.8rem; }
-            .controls-grid { grid-template-columns: repeat(2, 1fr); }
-            .tree-section { padding: 30px 15px; min-height: 400px; }
+        .light {
+            animation: blink 1s infinite alternate;
+            display: inline-block;
         }
-
-        @media (max-width: 480px) {
-            .title-glow { font-size: 2rem; }
-            .controls-grid { grid-template-columns: 1fr; }
-            .stat-item { min-width: 100px; }
+        @keyframes blink {
+            0% { opacity: 0.3; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+        .wish-box {
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 5px solid gold;
+        }
+        .wish {
+            font-size: 20px;
+            color: gold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .author {
+            color: #aaa;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        .btn {
+            background: linear-gradient(45deg, #FF5722, #FF9800);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255,87,34,0.4);
+        }
+        .footer {
+            margin-top: 30px;
+            color: #88aaff;
+            font-size: 14px;
+        }
+        .counter {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            margin: 15px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <!-- 背景星光 -->
-    <div id="stars"></div>
-    
-    <!-- 粒子特效层 -->
-    <div id="particles"></div>
-
     <div class="container">
-        <!-- 标题区 -->
-        <header class="header">
-            <h1 class="title-glow">✨ 终极动态炫光圣诞树 ✨</h1>
-            <p class="subtitle">每一次闪烁，都是对你的祝福 | 每一次互动，都有惊喜发生</p>
-        </header>
-
-        <!-- 数据面板 -->
-        <section class="stats-panel">
-            <div class="stat-item">
-                <div class="stat-value" id="visitCount">1</div>
-                <div class="stat-label">访问次数</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value" id="lightCount">128</div>
-                <div class="stat-label">灯光闪烁</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value" id="wishCount">1</div>
-                <div class="stat-label">祝福送达</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value" id="heartCount">0</div>
-                <div class="stat-label">爱心发射</div>
-            </div>
-        </section>
-
-        <!-- 圣诞树核心展示区 -->
-        <section class="tree-section">
-            <canvas id="treeCanvas" width="600" height="500"></canvas>
-        </section>
-
-        <!-- 祝福语区 -->
-        <section class="wish-box">
-            <div class="wish-text" id="wishText">愿你心想事成，美梦成真</div>
-            <div class="wish-author" id="wishAuthor">—— 小精灵</div>
-        </section>
-
-        <!-- 控制按钮组 -->
-        <div class="controls-grid">
-            <button class="ctrl-btn btn-light" onclick="toggleLights()">
-                <i class="fas fa-lightbulb"></i>
-                <span class="btn-label">梦幻灯光</span>
-            </button>
-            <button class="ctrl-btn btn-style" onclick="changeTreeStyle()">
-                <i class="fas fa-palette"></i>
-                <span class="btn-label">切换样式</span>
-            </button>
-            <button class="ctrl-btn btn-wish" onclick="changeWish()">
-                <i class="fas fa-comment-alt"></i>
-                <span class="btn-label">更换祝福</span>
-            </button>
-            <button class="ctrl-btn btn-snow" onclick="toggleSnow()">
-                <i class="fas fa-snowflake"></i>
-                <span class="btn-label">冰雪世界</span>
-            </button>
-            <button class="ctrl-btn btn-heart" onclick="launchHearts()">
-                <i class="fas fa-heart"></i>
-                <span class="btn-label">发射爱心</span>
-            </button>
-            <button class="ctrl-btn btn-music" onclick="toggleMusic()">
-                <i class="fas fa-music"></i>
-                <span class="btn-label">节日音乐</span>
-            </button>
-            <button class="ctrl-btn btn-share" onclick="shareTree()">
-                <i class="fas fa-share-alt"></i>
-                <span class="btn-label">分享喜悦</span>
-            </button>
+        <h1>🎄 专属程序员的浪漫 🎄</h1>
+        <div class="counter">❤️ 祝福传递次数: <span id="count">1</span></div>
+        
+        <div class="tree" id="treeDisplay">
+            <!-- 树会由JavaScript生成 -->
         </div>
-
-        <!-- 页脚 -->
-        <footer class="footer">
-            <p>🎄 这份浪漫，专属于看到它的你 | 🎅 圣诞快乐，不止今天</p>
-            <p>❤️ 用代码编织温暖，让技术传递祝福 | 刷新页面会有新惊喜</p>
-        </footer>
+        
+        <div class="wish-box">
+            <div class="wish" id="wishText">Merry Christmas!</div>
+            <div class="author" id="wishAuthor">—— 圣诞快乐</div>
+        </div>
+        
+        <div>
+            <button class="btn" onclick="changeLights()">✨ 切换灯光</button>
+            <button class="btn" onclick="changeWish()">💝 更换祝福</button>
+            <button class="btn" onclick="shareLove()">📱 分享浪漫</button>
+        </div>
+        
+        <div class="footer">
+            <p>代码浪漫 · 微信代码浪漫 · 手机代码浪漫</p>
+            <p>@荔枝甜甜 同款 | 愿你的圣诞充满温暖</p>
+        </div>
     </div>
 
-    <!-- 音频 -->
-    <audio id="bgMusic" loop>
-        <source src="https://assets.mixkit.co/music/preview/mixkit-christmas-is-here-186.mp3" type="audio/mpeg">
-    </audio>
-
     <script>
-        // ==================== 全局变量与配置 ====================
-        const CONFIG = {
-            LIGHT_COLORS: [
-                '#FF0000', '#00FF00', '#FFFF00', '#00FFFF', 
-                '#FF00FF', '#FFA500', '#FF69B4', '#9370DB',
-                '#00FF7F', '#1E90FF', '#FFD700', '#FF1493'
-            ],
-            TREE_STYLES: ['classic', 'rainbow', 'ice', 'fire', 'galaxy'],
-            WISHES: [
-                {text: "愿你心想事成，美梦成真 ✨", author: "星空许愿精灵"},
-                {text: "平安喜乐常相伴，岁月静好永相随 ❤️", author: "平安使者"},
-                {text: "代码无BUG，人生皆坦途 💻", author: "程序员圣诞老人"},
-                {text: "愿你的世界，永远闪烁温暖的光芒 🌟", author: "光芒守护者"},
-                {text: "圣诞钟声响起，幸福正在派送中 🔔", author: "钟声邮差"},
-                {text: "雪花飘落时，所有的美好都将如期而至 ❄️", author: "雪花仙子"},
-                {text: "爱是圣诞最好的礼物，你是我最想的祝福 🎁", author: "爱心大使"},
-                {text: "愿新年胜旧年，未来皆可期 🎉", author: "时光旅人"}
-            ]
-        };
-
-        // 状态管理
-        let state = {
-            visitCount: parseInt(localStorage.getItem('xmasVisitCount')) || 1,
-            lightCount: 128,
-            wishCount: 1,
-            heartCount: 0,
-            currentStyle: 'classic',
-            lightsOn: true,
-            snowActive: true,
-            musicPlaying: false,
-            currentWishIndex: 0
-        };
-
-        // DOM元素
-        const canvas = document.getElementById('treeCanvas');
-        const ctx = canvas.getContext('2d');
-
-        // ==================== 初始化函数 ====================
+        // ====== 圣诞树数据 ======
+        const tree = [
+            "         ★",
+            "        🎄🎄🎄",
+            "       🎄🎄🎄🎄🎄",
+            "      🎄🎄🎄🎄🎄🎄🎄",
+            "     🎄🎄🎄🎄🎄🎄🎄🎄🎄",
+            "    🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄",
+            "   🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄",
+            "  🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄",
+            " 🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄",
+            "🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄",
+            "        |||",
+            "        |||"
+        ];
+        
+        // ====== 祝福语库 ======
+        const wishes = [
+            {text: "Merry Christmas! 圣诞快乐！", author: "圣诞祝福"},
+            {text: "愿你平安喜乐，岁岁年年", author: "平安使者"},
+            {text: "代码无BUG，人生皆坦途", author: "程序员福音"},
+            {text: "爱是圣诞最好的礼物", author: "爱的箴言"},
+            {text: "愿星光洒满你的前程", author: "星光祝福"},
+            {text: "温暖相伴，幸福相随", author: "温暖祝福"}
+        ];
+        
+        // ====== 灯光颜色 ======
+        const colors = ['#FF0000', '#00FF00', '#FFFF00', '#00FFFF', '#FF00FF', '#FFA500', '#FF69B4'];
+        
+        // ====== 状态变量 ======
+        let currentColor = 0;
+        let currentWish = 0;
+        let visitCount = localStorage.getItem('simpleXmasCount') || 1;
+        
+        // ====== 初始化 ======
         function init() {
-            // 更新访问数据
-            state.visitCount++;
-            localStorage.setItem('xmasVisitCount', state.visitCount);
-            updateStatsDisplay();
+            // 更新访问次数
+            document.getElementById('count').textContent = visitCount;
+            localStorage.setItem('simpleXmasCount', parseInt(visitCount) + 1);
             
-            // 创建背景星光
-            createStars();
+            // 绘制树
+            drawTree();
             
-            // 绘制初始圣诞树
-            drawChristmasTree();
-            
-            // 初始化祝福
+            // 设置祝福
             changeWish();
             
-            // 启动雪花
-            if (state.snowActive) createSnowfall();
-            
-            // 启动灯光自动变换
+            // 自动切换灯光
             setInterval(() => {
-                if (state.lightsOn) {
-                    state.lightCount += 3;
-                    drawChristmasTree();
-                    updateStatsDisplay();
+                currentColor = (currentColor + 1) % colors.length;
+                drawTree();
+            }, 800);
+            
+            // 自动切换祝福
+            setInterval(changeWish, 5000);
+        }
+        
+        // ====== 绘制圣诞树 ======
+        function drawTree() {
+            const display = document.getElementById('treeDisplay');
+            display.innerHTML = '';
+            
+            tree.forEach(line => {
+                const div = document.createElement('div');
+                let htmlLine = '';
+                
+                for (let char of line) {
+                    if (char === '🎄') {
+                        htmlLine += `<span class="light" style="color:${colors[currentColor]}">${char}</span>`;
+                    } else if (char === '★') {
+                        htmlLine += `<span style="color:gold">${char}</span>`;
+                    } else {
+                        htmlLine += char;
+                    }
                 }
-            }, 300);
-            
-            // 自动更换祝福（每8秒）
-            setInterval(changeWish, 8000);
-            
-            // 偶尔自动发射爱心
-            setInterval(() => {
-                if (Math.random() > 0.7) launchHearts(1);
-            }, 5000);
-            
-            console.log('🎄 终极炫光圣诞树已加载！');
+                
+                div.innerHTML = htmlLine;
+                display.appendChild(div);
+            });
         }
-
-        // ==================== 核心绘图函数 ====================
-        function drawChristmasTree() {
-            const width = canvas.width;
-            const height = canvas.height;
-            
-            // 清空画布
-            ctx.clearRect(0, 0, width, height);
-            
-            // 绘制树的主体
-            drawTreeBody(width, height);
-            
-            // 绘制装饰和灯光
-            drawDecorations(width, height);
-            
-            // 绘制树顶星星
-            drawStar(width, height);
-            
-            // 绘制树干
-            drawTrunk(width, height);
-        }
-
-        function drawTreeBody(width, height) {
-            const centerX = width / 2;
-            const treeBottom = height - 80;
-            const treeTop = 100;
-            const treeHeight = treeBottom - treeTop;
-            
-            // 根据样式选择颜色
-            let gradient;
-            switch(state.currentStyle) {
-                case 'rainbow':
-                    gradient = ctx.createLinearGradient(centerX - 150, treeTop, centerX + 150, treeBottom);
-                    gradient.addColorStop(0, '#FF0000');
-                    gradient.addColorStop(0.2, '#FFA500');
-                    gradient.addColorStop(0.4, '#FFFF00');
-                    gradient.addColorStop(0.6, '#00FF00');
-                    gradient.addColorStop(0.8, '#00FFFF');
-                    gradient.addColorStop(1, '#FF00FF');
-                    break;
-                case 'ice':
-                    gradient = ctx.createLinearGradient(centerX - 150, treeTop, centerX + 150, treeBottom);
-                    gradient.addColorStop(0, '#E0FFFF');
-                    gradient.addColorStop(0.5, '#AFEEEE');
-                    gradient.addColorStop(1, '#00CED1');
-                    break;
-                case 'fire':
-                    gradient = ctx.createLinearGradient(centerX - 150, treeTop, centerX + 150, treeBottom);
-                    gradient.addColorStop(0, '#FF4500');
-                    gradient.addColorStop(0.5, '#FF8C00');
-                    gradient.addColorStop(1, '#FFD700');
-                    break;
-                case 'galaxy':
-                    gradient = ctx.createLinearGradient(centerX - 150, treeTop, centerX + 150, treeBottom);
-                    gradient.addColorStop(0, '#9370DB');
-                    gradient.addColorStop(0.5, '#8A2BE2');
-                    gradient.addColorStop(1, '#4B0082');
-                    break;
-                default: // classic
-                    gradient = ctx.createLinearGradient(centerX - 150, treeTop, centerX + 150, treeBottom);
-                    gradient.addColorStop(0, '#228B22');
-                    gradient.addColorStop(1, '#32CD32');
-            }
-            
-            // 绘制树层
-            const layers = 8;
-            for (let i = 0; i < layers; i++) {
-                const layerY = treeTop + (i * (treeHeight / layers));
-                const layerWidth = 80 + (i * 30);
-                
-                ctx.beginPath();
-                ctx.moveTo(centerX - layerWidth/2, layerY);
-                ctx.lineTo(centerX, layerY - 40);
-                ctx.lineTo(centerX + layerWidth/2, layerY);
-                ctx.closePath();
-                
-                ctx.fillStyle = gradient;
-                ctx.fill();
-                
-                // 添加图层边缘高光
-                ctx.strokeStyle = 'rgba(255, 255, 200, 0.3)';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-            }
-        }
-
-        function drawDecorations(width, height) {
-            if (!state.lightsOn) return;
-            
-            const centerX = width / 2;
-            const treeTop = 100;
-            const treeBottom = height - 80;
-            
-            // 绘制闪烁的装饰灯
-            for (let i = 0; i < 25; i++) {
-                const x = centerX + (Math.random() - 0.5) * 200;
-                const y = treeTop + Math.random() * (treeBottom - treeTop - 100);
-                
-                // 随机颜色和大小
-                const color = CONFIG.LIGHT_COLORS[Math.floor(Math.random() * CONFIG.LIGHT_COLORS.length)];
-                const size = 4 + Math.random() * 6;
-                const pulse = Math.sin(Date.now() / 200 + i) * 0.3 + 0.7;
-                
-                // 绘制光晕
-                const gradient = ctx.createRadialGradient(x, y, 0, x, y, size * 3);
-                gradient.addColorStop(0, color);
-                gradient.addColorStop(1, 'transparent');
-                
-                ctx.beginPath();
-                ctx.arc(x, y, size * 3 * pulse, 0, Math.PI * 2);
-                ctx.fillStyle = gradient;
-                ctx.fill();
-                
-                // 绘制灯球
-                ctx.beginPath();
-                ctx.arc(x, y, size, 0, Math.PI * 2);
-                ctx.fillStyle = color;
-                ctx.fill();
-                ctx.strokeStyle = 'white';
-                ctx.lineWidth = 1;
-                ctx.stroke();
-            }
-        }
-
-        function drawStar(width, height) {
-            const centerX = width / 2;
-            const starY = 70;
-            
-            ctx.save();
-            ctx.translate(centerX, starY);
-            
-            // 旋转动画
-            const rotation = (Date.now() / 1000) % (Math.PI * 2);
-            ctx.rotate(rotation);
-            
-            // 绘制星星
-            ctx.beginPath();
-            for (let i = 0; i < 5; i++) {
-                const angle = (i * 2 * Math.PI / 5) - Math.PI / 2;
-                const radius1 = 25;
-                const radius2 = 10;
-                
-                const x1 = Math.cos(angle) * radius1;
-                const y1 = Math.sin(angle) * radius1;
-                
-                const angle2 = angle + Math.PI / 5;
-                const x2 = Math.cos(angle2) * radius2;
-                const y2 = Math.sin(angle2) * radius2;
-                
-                if (i === 0) {
-                    ctx.moveTo(x1, y1);
-                } else {
-                    ctx.lineTo(x1, y1);
-                }
-                ctx.lineTo(x2, y2);
-            }
-            ctx.closePath();
-            
-            // 星星渐变
-            const starGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 30);
-            starGradient.addColorStop(0, '#FFFFFF');
-            starGradient.addColorStop(1, '#FFD700');
-            
-            ctx.fillStyle = starGradient;
-            ctx.fill();
-            ctx.strokeStyle = '#FFA500';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            
-            // 星光
-            for (let i = 0; i < 8; i++) {
-                const angle = (i * Math.PI / 4);
-                const length = 40 + Math.sin(Date.now() / 300 + i) * 10;
-                
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.lineTo(Math.cos(angle) * length, Math.sin(angle) * length);
-                
-                const lineGradient = ctx.createLinearGradient(0, 0, 
-                    Math.cos(angle) * length, Math.sin(angle) * length);
-                lineGradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
-                lineGradient.addColorStop(1, 'transparent');
-                
-                ctx.strokeStyle = lineGradient;
-                ctx.lineWidth = 3;
-                ctx.stroke();
-            }
-            
-            ctx.restore();
-        }
-
-        function drawTrunk(width, height) {
-            const centerX = width / 2;
-            const trunkTop = height - 80;
-            const trunkHeight = 60;
-            const trunkWidth = 30;
-            
-            // 树干
-            ctx.fillStyle = '#8B4513';
-            ctx.fillRect(centerX - trunkWidth/2, trunkTop, trunkWidth, trunkHeight);
-            
-            // 树干纹理
-            ctx.strokeStyle = '#A0522D';
-            ctx.lineWidth = 2;
-            for (let i = 0; i < 5; i++) {
-                const y = trunkTop + 10 + i * 10;
-                ctx.beginPath();
-                ctx.moveTo(centerX - trunkWidth/2 + 5, y);
-                ctx.lineTo(centerX + trunkWidth/2 - 5, y);
-                ctx.stroke();
-            }
-            
-            // 树下阴影
-            const shadowGradient = ctx.createRadialGradient(
-                centerX, trunkTop + trunkHeight, 0,
-                centerX, trunkTop + trunkHeight, 80
-            );
-            shadowGradient.addColorStop(0, 'rgba(0, 0, 0, 0.3)');
-            shadowGradient.addColorStop(1, 'transparent');
-            
-            ctx.fillStyle = shadowGradient;
-            ctx.fillRect(centerX - 80, trunkTop + trunkHeight - 10, 160, 80);
-        }
-
-        // ==================== 特效功能函数 ====================
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const starCount = 150;
-            
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                
-                // 随机属性
-                const size = 1 + Math.random() * 3;
-                const x = Math.random() * 100;
-                const y = Math.random() * 100;
-                const duration = 2 + Math.random() * 4;
-                const delay = Math.random() * 5;
-                
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                star.style.left = `${x}vw`;
-                star.style.top = `${y}vh`;
-                star.style.setProperty('--duration', `${duration}s`);
-                star.style.animationDelay = `${delay}s`;
-                
-                starsContainer.appendChild(star);
-            }
-        }
-
-        function createSnowfall() {
-            if (!state.snowActive) return;
-            
-            const snowflakeCount = 50;
-            const snowflakes = ['❄️', '✨', '❅', '❆'];
-            
-            for (let i = 0; i < snowflakeCount; i++) {
-                setTimeout(() => {
-                    createSnowflake();
-                }, i * 200);
-            }
-            
-            // 持续生成
-            setInterval(() => {
-                if (state.snowActive && Math.random() > 0.3) {
-                    createSnowflake();
-                }
-            }, 500);
-        }
-
-        function createSnowflake() {
-            const snowflake = document.createElement('div');
-            snowflake.className = 'snowflake';
-            snowflake.innerHTML = ['❄️', '✨', '❅', '❆'][Math.floor(Math.random() * 4)];
-            
-            // 随机属性
-            const size = 15 + Math.random() * 25;
-            const left = Math.random() * 100;
-            const duration = 5 + Math.random() * 10;
-            const delay = Math.random() * 5;
-            
-            snowflake.style.fontSize = `${size}px`;
-            snowflake.style.left = `${left}vw`;
-            snowflake.style.opacity = 0.5 + Math.random() * 0.5;
-            snowflake.style.animationDuration = `${duration}s`;
-            snowflake.style.animationDelay = `${delay}s`;
-            
-            document.body.appendChild(snowflake);
-            
-            // 动画结束后移除
-            setTimeout(() => {
-                if (snowflake.parentNode) {
-                    snowflake.parentNode.removeChild(snowflake);
-                }
-            }, (duration + 2) * 1000);
-        }
-
-        function launchHearts(count = 15) {
-            for (let i = 0; i < count; i++) {
-                setTimeout(() => {
-                    createHeart();
-                }, i * 100);
-            }
-            state.heartCount += count;
-            updateStatsDisplay();
-        }
-
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '❤️';
-            
-            // 随机起始位置（屏幕下半部分）
-            const startLeft = 30 + Math.random() * 40;
-            const startTop = 60 + Math.random() * 30;
-            
-            heart.style.left = `${startLeft}%`;
-            heart.style.top = `${startTop}%`;
-            heart.style.fontSize = `${20 + Math.random() * 30}px`;
-            
-            // 随机动画参数
-            const duration = 1 + Math.random() * 1.5;
-            heart.style.animationDuration = `${duration}s`;
-            
-            document.body.appendChild(heart);
-            
-            // 动画结束后移除
-            setTimeout(() => {
-                if (heart.parentNode) {
-                    heart.parentNode.removeChild(heart);
-                }
-            }, duration * 1000);
-        }
-
-        // ==================== 交互控制函数 ====================
-        function toggleLights() {
-            state.lightsOn = !state.lightsOn;
-            drawChristmasTree();
-            
-            const btn = document.querySelector('.btn-light .btn-label');
-            btn.textContent = state.lightsOn ? '关闭灯光' : '梦幻灯光';
-        }
-
-        function changeTreeStyle() {
-            const currentIndex = CONFIG.TREE_STYLES.indexOf(state.currentStyle);
-            const nextIndex = (currentIndex + 1) % CONFIG.TREE_STYLES.length;
-            state.currentStyle = CONFIG.TREE_STYLES[nextIndex];
-            
-            drawChristmasTree();
-            
-            // 更新按钮文字
-            const styleNames = {
-                'classic': '经典绿', 
-                'rainbow': '彩虹', 
-                'ice': '冰雪', 
-                'fire': '火焰', 
-                'galaxy': '星空'
-            };
-            document.querySelector('.btn-style .btn-label').textContent = 
-                styleNames[state.currentStyle];
-        }
-
+        
+        // ====== 切换祝福 ======
         function changeWish() {
-            state.currentWishIndex = (state.currentWishIndex + 1) % CONFIG.WISHES.length;
-            const wish = CONFIG.WISHES[state.currentWishIndex];
+            currentWish = (currentWish + 1) % wishes.length;
+            const wish = wishes[currentWish];
             
             document.getElementById('wishText').textContent = wish.text;
-            document.getElementById('wishAuthor').textContent = wish.author;
+            document.getElementById('wishAuthor').textContent = `—— ${wish.author}`;
             
-            state.wishCount++;
-            updateStatsDisplay();
-            
-            // 添加文字动画效果
-            const wishText = document.getElementById('wishText');
-            wishText.style.animation = 'none';
+            // 简单动画
+            const wishEl = document.getElementById('wishText');
+            wishEl.style.opacity = 0;
             setTimeout(() => {
-                wishText.style.animation = 'fadeIn 0.8s ease';
+                wishEl.style.opacity = 1;
+                wishEl.style.transition = 'opacity 0.5s';
             }, 10);
         }
-
-        function toggleSnow() {
-            state.snowActive = !state.snowActive;
-            
-            const btn = document.querySelector('.btn-snow .btn-label');
-            btn.textContent = state.snowActive ? '关闭雪花' : '冰雪世界';
-            
-            if (!state.snowActive) {
-                // 移除所有雪花
-                document.querySelectorAll('.snowflake').forEach(snow => {
-                    if (snow.parentNode) snow.parentNode.removeChild(snow);
-                });
-            } else {
-                createSnowfall();
-            }
+        
+        // ====== 切换灯光 ======
+        function changeLights() {
+            currentColor = (currentColor + 1) % colors.length;
+            drawTree();
         }
-
-        function toggleMusic() {
-            const music = document.getElementById('bgMusic');
-            state.musicPlaying = !state.musicPlaying;
-            
-            if (state.musicPlaying) {
-                music.play().catch(e => {
-                    console.log('音乐播放失败:', e);
-                    state.musicPlaying = false;
-                });
-            } else {
-                music.pause();
-            }
-            
-            const btn = document.querySelector('.btn-music .btn-label');
-            btn.textContent = state.musicPlaying ? '关闭音乐' : '节日音乐';
-        }
-
-        function shareTree() {
+        
+        // ====== 分享功能 ======
+        function shareLove() {
             const url = window.location.href;
-            const title = '✨ 看看我的终极炫光圣诞树！';
-            const text = '我制作了一个超酷的动态圣诞树，闪烁的灯光和特效太美了！';
-            
             if (navigator.share) {
-                navigator.share({ title, text, url })
-                    .catch(err => console.log('分享取消:', err));
+                navigator.share({
+                    title: '✨ 专属程序员的浪漫圣诞树',
+                    text: '我收到了这份浪漫的圣诞树代码，分享给你！',
+                    url: url
+                });
             } else {
                 navigator.clipboard.writeText(url).then(() => {
-                    alert('链接已复制！粘贴分享给朋友吧～');
+                    alert('链接已复制！快去分享给你的TA吧~');
                 });
             }
         }
-
-        function updateStatsDisplay() {
-            document.getElementById('visitCount').textContent = state.visitCount;
-            document.getElementById('lightCount').textContent = state.lightCount;
-            document.getElementById('wishCount').textContent = state.wishCount;
-            document.getElementById('heartCount').textContent = state.heartCount;
-        }
-
-        // ==================== 页面加载 ====================
-        window.addEventListener('load', init);
-
+        
+        // ====== 页面加载 ======
+        window.onload = init;
+        
         // 控制台彩蛋
-        console.log(`
-        %c🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄
-        %c🎄                                🎄
-        %c🎄    终极炫光圣诞树加载成功      🎄
-        %c🎄                                🎄
-        %c🎄    试试这些快捷键：            🎄
-        %c🎄    L - 切换灯光               🎄
-        %c🎄    S - 切换样式               🎄
-        %c🎄    W - 更换祝福               🎄
-        %c🎄    H - 发射爱心               🎄
-        %c🎄    M - 音乐开关               🎄
-        %c🎄                                🎄
-        %c🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄
-        `, 
-        'color: #00ff88',
-        'color: #00ff88',
-        'color: #ffdd00',
-        'color: #00ff88',
-        'color: #00ccff',
-        'color: #ff9966',
-        'color: #9966ff',
-        'color: #ff2a6d',
-        'color: #ffcc00',
-        'color: #00ff88',
-        'color: #00ff88'
-        );
-
-        // 键盘快捷键
-        document.addEventListener('keydown', (e) => {
-            switch(e.key.toLowerCase()) {
-                case 'l': toggleLights(); break;
-                case 's': changeTreeStyle(); break;
-                case 'w': changeWish(); break;
-                case 'h': launchHearts(); break;
-                case 'm': toggleMusic(); break;
-                case ' ': launchHearts(5); break;
-            }
-        });
+        console.log('🎄 专属浪漫圣诞树已加载~');
+        console.log('❤️ 分享这份代码的浪漫给你的TA吧！');
     </script>
 </body>
 </html>
