@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 抖音同款超浪漫圣诞树 🎄</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            padding: 20px;
+            position: relative;
+        }
+
+        .snowflake {
+            position: absolute;
+            color: white;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .header {
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px #4CAF50;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A, #CDDC39);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #FFD700;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .tree-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tree {
+            font-family: 'Courier New', monospace;
+            font-size: 22px;
+            line-height: 1.4;
+            margin: 0 auto;
+            color: #32CD32;
+            text-shadow: 0 0 10px #32CD32;
+            position: relative;
+            z-index: 1;
+        }
+
+        .light {
+            display: inline-block;
+            animation: twinkle 1s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { 
+                opacity: 0.3; 
+                transform: scale(0.8); 
+                filter: brightness(0.8);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1.2); 
+                filter: brightness(1.5);
+            }
+        }
+
+        .star {
+            color: gold;
+            text-shadow: 0 0 20px gold;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .decoration {
+            position: absolute;
+            font-size: 24px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #FF5722, #FF9800);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 87, 34, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #2196F3, #03A9F4);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.6);
+        }
+
+        .wish-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .wish-text {
+            font-size: 1.8em;
+            color: #FFD700;
+            margin: 10px 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInOut 4s infinite alternate;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .counter {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin: 10px;
+            font-size: 0.9em;
+        }
+
+        .instructions {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #aaa;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .share-btn {
+            margin-top: 20px;
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .tree { font-size: 18px; }
+            .btn { padding: 12px 20px; font-size: 14px; }
+            .wish-text { font-size: 1.4em; }
+            .controls { gap: 10px; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.6em; }
+            .tree { font-size: 16px; }
+            .tree-container { padding: 20px; }
+            .controls { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+        }
+
+        /* 爱心特效 */
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            color: #ff4757;
+            pointer-events: none;
+            z-index: 1000;
+            animation: heartFloat 3s ease-in forwards;
+        }
+
+        @keyframes heartFloat {
+            0% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(-100px) scale(1.5); 
+            }
+        }
+
+        /* 进度条 */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- 雪花背景 -->
+    <div id="snowflakes"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-tree"></i> 抖音同款超浪漫圣诞树 <i class="fas fa-tree"></i></h1>
+            <div class="subtitle">分享给你的TA，一起感受圣诞的温暖与浪漫 ❤️</div>
+            <div class="counter">访问次数: <span id="visitCount">1</span></div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="tree-container">
+            <div class="tree" id="treeDisplay">
+                <!-- 圣诞树将通过JavaScript动态生成 -->
+            </div>
+            
+            <!-- 装饰物位置 -->
+            <div id="decorations"></div>
+        </div>
+
+        <div class="wish-container">
+            <p><i class="fas fa-gift"></i> 圣诞祝福：</p>
+            <div class="wish-text" id="wishText">正在加载祝福...</div>
+            <p id="wishAuthor"></p>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="changeLights()">
+                <i class="fas fa-lightbulb"></i> 切换灯光
+            </button>
+            <button class="btn" onclick="changeTree()">
+                <i class="fas fa-palette"></i> 更换样式
+            </button>
+            <button class="btn" onclick="changeWish()">
+                <i class="fas fa-comment-alt"></i> 更换祝福
+            </button>
+            <button class="btn" onclick="toggleSnow()">
+                <i class="fas fa-snowflake"></i> 雪花特效
+            </button>
+            <button class="btn btn-secondary" onclick="sendLove()">
+                <i class="fas fa-heart"></i> 发射爱心
+            </button>
+            <button class="btn btn-secondary" onclick="shareTree()">
+                <i class="fas fa-share-alt"></i> 分享给朋友
+            </button>
+        </div>
+
+        <div class="instructions">
+            <p><i class="fas fa-info-circle"></i> 使用提示：</p>
+            <p>1. 点击按钮体验不同特效</p>
+            <p>2. 长按屏幕可以保存圣诞树图片</p>
+            <p>3. 分享给朋友一起感受圣诞氛围</p>
+            <p>4. 此页面已适配手机，横屏效果更佳</p>
+        </div>
+
+        <div class="footer">
+            <p>🎄 制作：抖音同款圣诞树 | 🎅 祝你圣诞快乐！</p>
+            <p>❤️ 分享爱，传递温暖，让这个圣诞节更有意义</p>
+            <button class="btn share-btn" onclick="copyLink()">
+                <i class="fas fa-link"></i> 复制分享链接
+            </button>
+        </div>
+    </div>
+
+    <!-- 音频元素 -->
+    <audio id="bgMusic" loop>
+        <!-- 可以使用在线音乐链接，这里使用静音占位 -->
+        <source src="" type="audio/mpeg">
+        您的浏览器不支持音频元素。
+    </audio>
+
+    <script>
+        // ==================== 初始化数据 ====================
+        const treeDesigns = [
+            // 设计1：经典圣诞树
+            [
+                "         ★",
+                "        🎄🎄🎄",
+                "       🎄🎄🎄🎄🎄",
+                "      🎄🎄🎄🎄🎄🎄🎄",
+                "     🎄🎄🎄🎄🎄🎄🎄🎄🎄",
+                "    🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄",
+                "   🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄",
+                "  🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄",
+                " 🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄",
+                "🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄",
+                "        |||",
+                "        |||"
+            ],
+            // 设计2：简约风格
+            [
+                "         ☆",
+                "        ✨✨✨",
+                "       ✨✨✨✨✨",
+                "      ✨✨✨✨✨✨✨",
+                "     ✨✨✨✨✨✨✨✨✨",
+                "    ✨✨✨✨✨✨✨✨✨✨✨",
+                "   ✨✨✨✨✨✨✨✨✨✨✨✨✨",
+                "  ✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨",
+                "        ███",
+                "        ███"
+            ],
+            // 设计3：爱心树
+            [
+                "         ♥",
+                "        ♥♥♥",
+                "       ♥♥♥♥♥",
+                "      ♥♥♥♥♥♥♥",
+                "     ♥♥♥♥♥♥♥♥♥",
+                "    ♥♥♥♥♥♥♥♥♥♥♥",
+                "   ♥♥♥♥♥♥♥♥♥♥♥♥♥",
+                "  ♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥",
+                "        |||",
+                "        |||"
+            ]
+        ];
+
+        // 灯光颜色（用于装饰）
+        const lightColors = [
+            '#FF0000', '#00FF00', '#FFFF00', '#00FFFF', 
+            '#FF00FF', '#FFA500', '#FF69B4', '#9370DB',
+            '#00FF7F', '#1E90FF', '#FFD700', '#FF1493'
+        ];
+
+        // 树体颜色
+        const treeColors = [
+            '#32CD32', '#228B22', '#90EE90', '#98FB98',
+            '#00FA9A', '#00FF7F', '#3CB371', '#2E8B57'
+        ];
+
+        // 圣诞祝福语库
+        const christmasWishes = [
+            {text: "圣诞快乐！愿你的世界充满爱与温暖 ❤️", author: "圣诞老人"},
+            {text: "愿你心想事成，美梦成真 ✨", author: "小精灵"},
+            {text: "平安夜的钟声，为你敲响幸福之门 🔔", author: "平安使者"},
+            {text: "愿圣诞的喜悦伴你一整年 🎁", author: "快乐天使"},
+            {text: "雪花飘落，祝福送到，圣诞快乐！ ❄️", author: "雪花仙子"},
+            {text: "愿你的圣诞充满神奇与美好 🦌", author: "驯鹿鲁道夫"},
+            {text: "和家人共度温馨圣诞时光 🏠", author: "家庭守护者"},
+            {text: "爱是圣诞最好的礼物，愿爱常伴你左右 💝", author: "爱心使者"},
+            {text: "圣诞树上挂满祝福，每一个都是给你的 🎄", author: "圣诞树精灵"},
+            {text: "愿新年的希望从今夜开始 🌟", author: "希望之星"}
+        ];
+
+        // 装饰物符号
+        const decorations = ['🎁', '🔔', '⭐', '✨', '❄️', '🍬', '🎀', '🧦'];
+
+        // ==================== 全局变量 ====================
+        let currentTreeIndex = 0;
+        let currentLightIndex = 0;
+        let currentWishIndex = 0;
+        let snowEnabled = true;
+        let lightsEnabled = true;
+        let decorationInterval;
+        let visitCount = localStorage.getItem('christmasVisitCount') || 1;
+        let autoChangeInterval;
+
+        // ==================== 初始化函数 ====================
+        function init() {
+            // 更新访问次数
+            document.getElementById('visitCount').textContent = visitCount;
+            localStorage.setItem('christmasVisitCount', parseInt(visitCount) + 1);
+            
+            // 初始绘制
+            drawTree();
+            addDecorations();
+            changeWish();
+            createSnowflakes();
+            
+            // 自动切换效果
+            startAutoChanges();
+            
+            // 初始化进度条
+            initProgressBar();
+            
+            // 添加页面加载完成动画
+            setTimeout(() => {
+                document.querySelector('.tree-container').style.transform = 'scale(1)';
+                document.querySelector('.tree-container').style.opacity = '1';
+            }, 100);
+            
+            console.log("🎄 圣诞树初始化完成！");
+        }
+
+        // ==================== 圣诞树绘制函数 ====================
+        function drawTree() {
+            const treeDisplay = document.getElementById('treeDisplay');
+            treeDisplay.innerHTML = '';
+            
+            const currentTree = treeDesigns[currentTreeIndex];
+            
+            currentTree.forEach((line, lineIndex) => {
+                const lineDiv = document.createElement('div');
+                let lineHTML = '';
+                
+                for (let char of line) {
+                    if (char === '🎄' || char === '✨' || char === '♥') {
+                        // 对树部分添加闪烁效果
+                        if (lightsEnabled) {
+                            const color = lightColors[currentLightIndex % lightColors.length];
+                            lineHTML += `<span class="light" style="color:${color}; animation-delay:${Math.random()}s">${char}</span>`;
+                        } else {
+                            lineHTML += `<span style="color:${treeColors[currentTreeIndex % treeColors.length]}">${char}</span>`;
+                        }
+                    } else if (char === '★' || char === '☆') {
+                        // 星星特效
+                        lineHTML += `<span class="star">${char}</span>`;
+                    } else {
+                        lineHTML += char;
+                    }
+                }
+                
+                lineDiv.innerHTML = lineHTML;
+                treeDisplay.appendChild(lineDiv);
+            });
+            
+            // 更新进度条
+            updateProgressBar(30);
+        }
+
+        // ==================== 装饰物添加函数 ====================
+        function addDecorations() {
+            const decorationsContainer = document.getElementById('decorations');
+            decorationsContainer.innerHTML = '';
+            
+            // 为圣诞树添加随机装饰物
+            for (let i = 0; i < 12; i++) {
+                const decoration = document.createElement('div');
+                decoration.className = 'decoration';
+                decoration.textContent = decorations[Math.floor(Math.random() * decorations.length)];
+                
+                // 随机位置
+                const left = 30 + Math.random() * 40;
+                const top = 20 + Math.random() * 70;
+                
+                decoration.style.left = `${left}%`;
+                decoration.style.top = `${top}%`;
+                decoration.style.animationDelay = `${Math.random() * 2}s`;
+                decoration.style.color = lightColors[Math.floor(Math.random() * lightColors.length)];
+                
+                decorationsContainer.appendChild(decoration);
+            }
+            
+            // 更新进度条
+            updateProgressBar(50);
+        }
+
+        // ==================== 雪花特效函数 ====================
+        function createSnowflakes() {
+            if (!snowEnabled) return;
+            
+            const snowContainer = document.getElementById('snowflakes');
+            const snowflakeCount = 50;
+            
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.innerHTML = '❄️';
+                
+                // 随机属性
+                const size = 10 + Math.random() * 20;
+                const left = Math.random() * 100;
+                const duration = 5 + Math.random() * 10;
+                const delay = Math.random() * 5;
+                
+                snowflake.style.fontSize = `${size}px`;
+                snowflake.style.left = `${left}vw`;
+                snowflake.style.opacity = 0.3 + Math.random() * 0.7;
+                snowflake.style.animationDuration = `${duration}s`;
+                snowflake.style.animationDelay = `${delay}s`;
+                
+                snowContainer.appendChild(snowflake);
+                
+                // 雪花消失后重新创建
+                setTimeout(() => {
+                    if (snowflake.parentNode && snowEnabled) {
+                        snowflake.parentNode.removeChild(snowflake);
+                        if (snowEnabled) createSingleSnowflake();
+                    }
+                }, (duration + delay) * 1000);
+            }
+            
+            // 更新进度条
+            updateProgressBar(70);
+        }
+
+        function createSingleSnowflake() {
+            if (!snowEnabled) return;
+            
+            const snowContainer = document.getElementById('snowflakes');
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.innerHTML = '❄️';
+            
+            const size = 10 + Math.random() * 20;
+            const left = Math.random() * 100;
+            const duration = 5 + Math.random() * 10;
+            
+            snowflake.style.fontSize = `${size}px`;
+            snowflake.style.left = `${left}vw`;
+            snowflake.style.opacity = 0.3 + Math.random() * 0.7;
+            snowflake.style.animationDuration = `${duration}s`;
+            
+            snowContainer.appendChild(snowflake);
+            
+            setTimeout(() => {
+                if (snowflake.parentNode) {
+                    snowflake.parentNode.removeChild(snowflake);
+                    if (snowEnabled) createSingleSnowflake();
+                }
+            }, duration * 1000);
+        }
+
+        function toggleSnow() {
+            snowEnabled = !snowEnabled;
+            const snowBtn = document.querySelector('button[onclick="toggleSnow()"]');
+            
+            if (snowEnabled) {
+                snowBtn.innerHTML = '<i class="fas fa-snowflake"></i> 关闭雪花';
+                createSnowflakes();
+            } else {
+                snowBtn.innerHTML = '<i class="fas fa-snowflake"></i> 雪花特效';
+                document.getElementById('snowflakes').innerHTML = '';
+            }
+        }
+
+        // ==================== 交互控制函数 ====================
+        function changeLights() {
+            lightsEnabled = !lightsEnabled;
+            currentLightIndex++;
+            drawTree();
+            
+            const lightBtn = document.querySelector('button[onclick="changeLights()"]');
+            lightBtn.innerHTML = lightsEnabled ? 
+                '<i class="fas fa-lightbulb"></i> 关闭灯光' : 
+                '<i class="fas fa-lightbulb"></i> 切换灯光';
+        }
+
+        function changeTree() {
+            currentTreeIndex = (currentTreeIndex + 1) % treeDesigns.length;
+            drawTree();
+            addDecorations();
+            updateProgressBar(100);
+        }
+
+        function changeWish() {
+            currentWishIndex = (currentWishIndex + 1) % christmasWishes.length;
+            const wish = christmasWishes[currentWishIndex];
+            
+            document.getElementById('wishText').textContent = wish.text;
+            document.getElementById('wishAuthor').textContent = `—— ${wish.author}`;
+            
+            // 添加祝福语切换动画
+            const wishText = document.getElementById('wishText');
+            wishText.style.animation = 'none';
+            setTimeout(() => {
+                wishText.style.animation = 'fadeInOut 4s infinite alternate';
+            }, 10);
+        }
+
+        function sendLove() {
+            // 创建爱心特效
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createHeart();
+                }, i * 100);
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            
+            const startLeft = 40 + Math.random() * 20;
+            
+            heart.style.left = `${startLeft}%`;
+            heart.style.bottom = '20%';
+            heart.style.fontSize = `${20 + Math.random() * 20}px`;
+            heart.style.animationDuration = `${1 + Math.random() * 2}s`;
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                if (heart.parentNode) {
+                    heart.parentNode.removeChild(heart);
+                }
+            }, 3000);
+        }
+
+        // ==================== 分享功能 ====================
+        function shareTree() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '抖音同款超浪漫圣诞树',
+                    text: '看我制作的动态圣诞树，超级浪漫！',
+                    url: window.location.href
+                })
+                .then(() => console.log('分享成功'))
+                .catch(error => console.log('分享失败:', error));
+            } else {
+                copyLink();
+                alert('链接已复制到剪贴板！粘贴分享给朋友吧~');
+            }
+        }
+
+        function copyLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url)
+                .then(() => {
+                    const shareBtn = document.querySelector('button[onclick="copyLink()"]');
+                    const originalText = shareBtn.innerHTML;
+                    shareBtn.innerHTML = '<i class="fas fa-check"></i> 已复制！';
+                    
+                    setTimeout(() => {
+                        shareBtn.innerHTML = originalText;
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('复制失败:', err);
+                    alert('复制失败，请手动复制链接');
+                });
+        }
+
+        // ==================== 自动切换效果 ====================
+        function startAutoChanges() {
+            // 自动切换灯光颜色
+            if (autoChangeInterval) clearInterval(autoChangeInterval);
+            
+            autoChangeInterval = setInterval(() => {
+                if (lightsEnabled) {
+                    currentLightIndex++;
+                    drawTree();
+                }
+                
+                // 随机移动装饰物
+                moveDecorationsRandomly();
+                
+            }, 1500);
+        }
+
+        function moveDecorationsRandomly() {
+            const allDecorations = document.querySelectorAll('.decoration');
+            allDecorations.forEach(deco => {
+                const moveX = (Math.random() - 0.5) * 10;
+                const moveY = (Math.random() - 0.5) * 10;
+                
+                const currentLeft = parseFloat(deco.style.left);
+                const currentTop = parseFloat(deco.style.top);
+                
+                let newLeft = currentLeft + moveX;
+                let newTop = currentTop + moveY;
+                
+                // 限制在树区域内
+                newLeft = Math.max(25, Math.min(75, newLeft));
+                newTop = Math.max(15, Math.min(85, newTop));
+                
+                deco.style.left = `${newLeft}%`;
+                deco.style.top = `${newTop}%`;
+            });
+        }
+
+        // ==================== 进度条功能 ====================
+        function initProgressBar() {
+            updateProgressBar(10);
+        }
+
+        function updateProgressBar(percent) {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = `${percent}%`;
+            
+            // 根据百分比改变颜色
+            if (percent < 30) {
+                progressBar.style.background = 'linear-gradient(90deg, #FF5722, #FF9800)';
+            } else if (percent < 70) {
+                progressBar.style.background = 'linear-gradient(90deg, #FF9800, #FFEB3B)';
+            } else {
+                progressBar.style.background = 'linear-gradient(90deg, #4CAF50, #8BC34A)';
+            }
+        }
+
+        // ==================== 页面事件监听 ====================
+        // 触摸事件（移动端友好）
+        document.addEventListener('touchstart', function(e) {
+            // 添加触摸反馈
+            if (e.target.tagName === 'BUTTON') {
+                e.target.style.transform = 'scale(0.95)';
+            }
+            
+            // 长按保存
+            if (e.target.closest('.tree-container')) {
+                setTimeout(() => {
+                    // 这里可以添加长按保存图片功能
+                }, 1000);
+            }
+        });
+
+        document.addEventListener('touchend', function(e) {
+            if (e.target.tagName === 'BUTTON') {
+                e.target.style.transform = '';
+            }
+        });
+
+        // 键盘快捷键
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'ArrowRight':
+                case 'd':
+                    changeTree();
+                    break;
+                case 'ArrowLeft':
+                case 'a':
+                    currentTreeIndex = (currentTreeIndex - 1 + treeDesigns.length) % treeDesigns.length;
+                    drawTree();
+                    addDecorations();
+                    break;
+                case ' ':
+                case 'Enter':
+                    changeWish();
+                    break;
+                case 's':
+                    toggleSnow();
+                    break;
+                case 'l':
+                    changeLights();
+                    break;
+                case 'h':
+                    sendLove();
+                    break;
+            }
+        });
+
+        // 页面可见性变化
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                if (autoChangeInterval) clearInterval(autoChangeInterval);
+            } else {
+                startAutoChanges();
+            }
+        });
+
+        // ==================== 页面加载完成 ====================
+        // 等待所有资源加载
+        window.addEventListener('load', function() {
+            // 模拟加载过程
+            let loadPercent = 0;
+            const loadInterval = setInterval(() => {
+                loadPercent += 10;
+                updateProgressBar(loadPercent);
+                
+                if (loadPercent >= 100) {
+                    clearInterval(loadInterval);
+                    setTimeout(init, 300);
+                }
+            }, 100);
+        });
+
+        // 初始化提示
+        console.log(`
+        🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄
+        🎄                                🎄
+        🎄    抖音同款圣诞树已加载        🎄
+        🎄                                🎄
+        🎄    使用提示：                  🎄
+        🎄    1. 点击按钮切换效果         🎄
+        🎄    2. 键盘快捷键：             🎄
+        🎄       A/D - 切换样式           🎄
+        🎄       空格 - 更换祝福          🎄
+        🎄       S - 雪花特效             🎄
+        🎄       L - 灯光开关             🎄
+        🎄       H - 发射爱心             🎄
+        🎄                                🎄
+        🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄
+        `);
+    </script>
+</body>
+</html>
